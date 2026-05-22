@@ -22,13 +22,12 @@ export const metadata: Metadata = {
   }, // <--- เติมปีกกาปิดของ icons ตรงนี้ให้แล้วครับ
 
   openGraph: {
-    title: "HSR Roleplay TH | Database",
-    description: "ระบบจัดการฐานข้อมูลและบอทสำหรับโปรเจกต์ HSR RP",
+    title: "Honkai: Star Rail - RoleplayTH",
     url: "https://hsr-rpth.vercel.app", 
-    siteName: "HSR Roleplay TH",
+    siteName: "HSR RPTH",
     images: [
       {
-        url: "https://iili.io/CHYeEF4.png", // เปลี่ยนลิงก์ภาพแล้ว
+        url: "Honkai-Star-Rail-Logo3.png", // เปลี่ยนลิงก์ภาพแล้ว
         width: 1200,                       
         height: 630,
         alt: "HSR Roleplay TH Database Preview",
@@ -40,9 +39,9 @@ export const metadata: Metadata = {
   // ตั้งค่าการแสดงผลสำหรับการแชร์ลง Twitter / X
   twitter: {
     card: "summary_large_image", 
-    title: "HSR Roleplay TH | Database",
+    title: "Honkai: Star Rail - RoleplayTH",
     description: "ระบบจัดการฐานข้อมูลและบอทสำหรับโปรเจกต์ HSR RP",
-    images: ["https://iili.io/CHYeEF4.png"], // เปลี่ยนลิงก์ภาพแล้ว
+    images: ["Honkai-Star-Rail-Logo3.png"], // เปลี่ยนลิงก์ภาพแล้ว
   },
 };
 
