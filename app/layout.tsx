@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   description: "หน้าระบบสำหรับกิจกรรม Honkai: Star Rail",
 
   icons: {
-    icon: "https://iili.io/C9Q7TgI.png", 
-    apple: "https://iili.io/C9Q7TgI.png", 
+    icon: "https://iili.io/CHYGJef.png", 
+    apple: "https://iili.io/CHYGJef.png", 
   }, // <--- เติมปีกกาปิดของ icons ตรงนี้ให้แล้วครับ
 
   openGraph: {
