@@ -21,13 +21,15 @@ export const metadata: Metadata = {
     apple: "https://iili.io/CHYGJef.png", 
   }, // <--- เติมปีกกาปิดของ icons ตรงนี้ให้แล้วครับ
 
-  openGraph: {
+openGraph: {
     title: "Honkai: Star Rail - RoleplayTH",
+    description: "ระบบจัดการฐานข้อมูลและบอทสำหรับโปรเจกต์ HSR RP",
     url: "https://hsr-rpth.vercel.app", 
     siteName: "HSR RPTH",
     images: [
       {
-        url: "Honkai-Star-Rail-Logo3.png", // เปลี่ยนลิงก์ภาพแล้ว
+        // แก้เป็น URL เต็มรูปแบบที่ชี้ไปยังไฟล์ในโฟลเดอร์ public
+        url: "https://hsr-rpth.vercel.app/Honkai-Star-Rail-Logo3.png", 
         width: 1200,                       
         height: 630,
         alt: "HSR Roleplay TH Database Preview",
@@ -41,7 +43,7 @@ export const metadata: Metadata = {
     card: "summary_large_image", 
     title: "Honkai: Star Rail - RoleplayTH",
     description: "ระบบจัดการฐานข้อมูลและบอทสำหรับโปรเจกต์ HSR RP",
-    images: ["Honkai-Star-Rail-Logo3.png"], // เปลี่ยนลิงก์ภาพแล้ว
+    images: ["https://hsr-rpth.vercel.app/Honkai-Star-Rail-Logo3.png"], // แก้เป็น URL เต็มรูปแบบเช่นกัน
   },
 };
 
