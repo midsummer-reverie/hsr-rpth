@@ -1,48 +1,57 @@
 "use client";
 
+import React from 'react';
+
 export default function Loading() {
+  // ดึงชุดตัวแปรสีและฟอนต์แบบเดียวกับที่คุณใช้ในหน้าหลักเป๊ะๆ
+  const themeStyles = {
+    '--hsr-gold': '#E5C57F',
+    '--hsr-border': 'rgba(229, 197, 127, 0.2)',
+    fontFamily: '"Google Sans", sans-serif'
+  } as React.CSSProperties;
+
   return (
-    <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#020617]">
-      {/* 🌌 Cosmic Background with Gold Dust particles */}
-      <div className="absolute inset-0 opacity-30 pointer-events-none">
-        <div className="absolute top-[15%] left-[25%] w-1 h-1 bg-amber-200 rounded-full animate-pulse"></div>
-        <div className="absolute top-[45%] left-[75%] w-1.5 h-1.5 bg-yellow-400 rounded-full animate-ping [animation-duration:4s]"></div>
-        <div className="absolute top-[75%] left-[15%] w-1 h-1 bg-amber-300 rounded-full animate-pulse [animation-delay:1s]"></div>
-      </div>
-
-      {/* ✨ Main Animation: Golden Astral Orbit */}
-      <div className="relative flex items-center justify-center w-36 h-36">
-        {/* Outer Ring: Slow, Elegant Gold */}
-        <div className="absolute inset-0 border-2 border-amber-600/20 rounded-full border-t-amber-400 animate-spin [animation-duration:5s]"></div>
-        
-        {/* Middle Ring: Reverse, Soft Cream */}
-        <div className="absolute inset-3 border border-amber-800/10 rounded-full border-b-amber-200 animate-spin [animation-duration:4s] [animation-direction:reverse]"></div>
-        
-        {/* 🌟 Center Star: Core of the Express */}
-        <div className="w-5 h-5 bg-white rounded-full shadow-[0_0_25px_rgba(251,191,36,0.9)] animate-pulse"></div>
-      </div>
-
-      {/* 📜 Thematic Text */}
-      <div className="mt-10 text-center space-y-2.5">
-        <h2 className="text-xl font-semibold tracking-[0.25em] text-amber-300 uppercase animate-pulse">
-          Jumping to Hyperdrive
-        </h2>
-        <p className="text-xs text-slate-500 font-mono tracking-widest uppercase">
-          Astral Express Logs • Version 2.5 ACE
-        </p>
-      </div>
-
-      {/* 🚇 Progress Bar (Decorative Gold) */}
-      <div className="absolute bottom-12 w-56 h-[1.5px] bg-slate-800 overflow-hidden rounded-full">
-        <div className="h-full bg-gradient-to-r from-transparent via-amber-400 to-transparent w-full animate-[loading-bar_2s_infinite]"></div>
-      </div>
-
-      <style jsx>{`
-        @keyframes loading-bar {
+    <div 
+      className="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
+      style={{ ...themeStyles, backgroundColor: '#0B0B12' }}
+    >
+      <style dangerouslySetInnerHTML={{__html: `
+        @import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
+        @keyframes textGlow {
+          0%, 100% { opacity: 0.8; text-shadow: 0 0 5px rgba(229, 197, 127, 0.2); }
+          50% { opacity: 1; text-shadow: 0 0 15px rgba(229, 197, 127, 0.6); }
+        }
+        .animate-text-glow { animation: textGlow 3s ease-in-out infinite; }
+        @keyframes scanline {
           0% { transform: translateX(-100%); }
           100% { transform: translateX(100%); }
         }
-      `}</style>
+      `}} />
+
+      {/* สัญลักษณ์เรขาคณิตสไตล์มินิมอล (เพชรสีทอง) */}
+      <div className="relative w-12 h-12 mb-8">
+         <div className="absolute inset-0 border border-[#E5C57F]/30 rotate-45 animate-pulse"></div>
+         <div className="absolute inset-2 bg-[#E5C57F]/10 rotate-45 animate-ping" style={{ animationDuration: '2.5s' }}></div>
+         <div className="absolute inset-4 bg-[#E5C57F] rotate-45 shadow-[0_0_15px_rgba(229,197,127,0.6)] animate-pulse"></div>
+      </div>
+
+      {/* ข้อความโหลดใช้เอฟเฟกต์ textGlow แบบเดียวกับหน้าหลัก */}
+      <h2 className="text-2xl font-light tracking-[0.3em] uppercase animate-text-glow text-gray-200 mb-6">
+        Accessing <span className="font-bold text-[#E5C57F]">Archive</span>
+      </h2>
+
+      {/* เส้นโหลด (Loading Bar) สไตล์ไล่สี Gradient */}
+      <div className="w-64 h-[1px] overflow-hidden" style={{ backgroundColor: 'var(--hsr-border)' }}>
+        <div 
+          className="h-full w-full animate-[scanline_1.5s_ease-in-out_infinite]"
+          style={{ background: 'linear-gradient(to right, transparent, var(--hsr-gold), transparent)' }}
+        />
+      </div>
+      
+      {/* ข้อความเล็กๆ ด้านล่างให้ดูมีความเป็นระบบฐานข้อมูล */}
+      <p className="mt-4 text-[10px] text-gray-500 tracking-widest uppercase italic animate-pulse">
+        Retrieving Data ...
+      </p>
     </div>
   );
 }
