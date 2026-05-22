@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import LightConeSlot from '../../components/LightConeSlot'; 
 import RelicSlot from '../../components/RelicSlot';
 
+export const dynamic = 'force-dynamic';
 export default async function CharacterDetail({ params }: { params: Promise<{ id: string }> }) {
   
   const resolvedParams = await params;

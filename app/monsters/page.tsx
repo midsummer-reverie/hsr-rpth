@@ -2,6 +2,7 @@
 import prisma from '@/lib/prisma';
 import MonsterClient from './MonsterClient';
 
+export const dynamic = 'force-dynamic';
 export default async function MonstersPage() {
   const rawMonsters = await prisma.monster_templates.findMany({
     include: { monster_skills: true },

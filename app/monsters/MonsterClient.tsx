@@ -8,6 +8,7 @@ interface Props {
   elements: any[]; 
 }
 
+export const dynamic = 'force-dynamic';
 export default function MonsterClient({ monstersByFaction, elements }: Props) {
   
   const getRankInfo = (rank: number) => {

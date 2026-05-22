@@ -2,6 +2,7 @@
 import prisma from '@/lib/prisma';
 import Link from 'next/link';
 
+export const dynamic = 'force-dynamic';
 export default async function NpcRoster() {
   // ดึงข้อมูล NPC ทั้งหมด
   const allNpcs = await prisma.npcs.findMany({

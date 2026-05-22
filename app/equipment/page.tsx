@@ -2,6 +2,7 @@
 import prisma from '@/lib/prisma';
 import EquipmentClient from './EquipmentClient';
 
+export const dynamic = 'force-dynamic';
 export default async function EquipmentPage() {
   // 1. ดึง Light Cones และบังคับเรียงตามระดับดาวจากมากไปน้อย (5 -> 4 -> 3)
   const rawLightCones = await prisma.light_cones.findMany({
