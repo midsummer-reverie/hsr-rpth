@@ -88,7 +88,7 @@ export default async function NpcDetail({ params }: { params: Promise<{ id: stri
 
       {/* ================= RIGHT SIDE: Data Panel (สไลด์จากขวา) ================= */}
       <section 
-        className="w-full md:w-[60%] h-screen overflow-y-auto p-8 md:p-16 z-20 custom-scrollbar border-l border-white/5 stagger-right"
+        className="w-full md:w-[60%] min-h-screen overflow-y-auto p-8 md:p-16 z-20 custom-scrollbar border-l border-white/5 stagger-right"
         style={{ backgroundColor: 'var(--hsr-panel-bg)', '--delay': '0.2s' } as React.CSSProperties}
       >
         

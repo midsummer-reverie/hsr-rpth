@@ -112,7 +112,7 @@ export default async function CharacterDetail({ params }: { params: Promise<{ id
 
       {/* ================= RIGHT SIDE: Data Panel ================= */}
       <section 
-        className="w-full md:w-[60%] h-screen overflow-y-auto p-8 md:p-16 z-20 custom-scrollbar border-l border-[#E5C57F]/10 stagger-right"
+        className="w-full md:w-[60%] min-h-screen overflow-y-auto p-8 md:p-16 z-20 custom-scrollbar border-l border-[#E5C57F]/10 stagger-right"
         style={{ backgroundColor: 'var(--hsr-panel-bg)', '--delay': '0.2s' } as React.CSSProperties}
       >
         

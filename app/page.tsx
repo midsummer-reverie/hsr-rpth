@@ -137,7 +137,7 @@ export default function Home() {
       </aside>
 
       {/* ================= RIGHT MAIN CONTENT ================= */}
-      <section className="flex-1 h-screen overflow-y-auto p-6 md:p-10 z-10 custom-scrollbar">
+      <section className="flex-1 min-h-screen overflow-y-auto p-6 md:p-10 z-10 custom-scrollbar">
         
         {/* Banner Image (สไลด์จากขวา) */}
         <div 
