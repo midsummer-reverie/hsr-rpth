@@ -40,7 +40,6 @@ export default function AdminDashboard() {
             <Link 
               key={tool.id} 
               href={tool.href}
-              target={tool.isExternal ? "_blank" : "_self"}
               className="group relative bg-white/5 border border-white/10 p-8 rounded-sm overflow-hidden transition-all duration-500 hover:border-[#E5C57F]/50 hover:bg-[#E5C57F]/5 stagger-up"
               style={{ '--delay': `${0.3 + (index * 0.1)}s` } as React.CSSProperties}
             >
