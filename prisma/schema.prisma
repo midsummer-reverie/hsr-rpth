@@ -1,0 +1,307 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model active_effects {
+  id          Int     @id @default(autoincrement())
+  event_id    Int?
+  discord_id  BigInt?
+  effect_name String? @db.VarChar(50)
+  effect_type String? @db.VarChar(10)
+  value       Int?
+  duration    Int?
+  events      events? @relation(fields: [event_id], references: [event_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model battle_instances {
+  battle_id         Int                @id @default(autoincrement())
+  event_id          Int?               @unique(map: "unique_event")
+  monster_id        Int?
+  current_hp        Int
+  current_toughness Int
+  turn_count        Int?               @default(1)
+  is_active         Boolean?           @default(true)
+  stun_turns        Int?               @default(0)
+  monster_label     String?            @db.VarChar(50)
+  events            events?            @relation(fields: [event_id], references: [event_id], onDelete: NoAction, onUpdate: NoAction)
+  monster_templates monster_templates? @relation(fields: [monster_id], references: [monster_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([event_id, monster_label], map: "unique_monster_in_event")
+}
+
+model battle_logs {
+  log_id      Int       @id @default(autoincrement())
+  event_id    Int?
+  discord_id  BigInt?
+  action_type String?   @db.VarChar(20)
+  target_name String?   @db.VarChar(100)
+  rp_link     String?
+  timestamp   DateTime? @default(now()) @db.Timestamp(6)
+  events      events?   @relation(fields: [event_id], references: [event_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([event_id, discord_id], map: "unique_event_player")
+}
+
+model elements {
+  element_id      Int     @id @default(autoincrement())
+  element_name_en String  @unique @db.VarChar(50)
+  element_name_th String  @db.VarChar(50)
+  icon_url        String?
+  color_hex       String? @db.VarChar(10)
+  users           users[]
+  npcs            npcs[]
+}
+
+model event_participants {
+  id            Int     @id @default(autoincrement())
+  event_id      Int?
+  discord_id    BigInt?
+  external_link String?
+  status        String? @default("joined")
+  leave_reason  String?
+  events        events? @relation(fields: [event_id], references: [event_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model events {
+  event_id            Int                   @id @default(autoincrement())
+  type                String?
+  title               String?
+  description         String?
+  image_url           String?
+  max_players         Int?
+  end_time            DateTime?             @db.Timestamptz(6)
+  is_open             Boolean?              @default(true)
+  created_by          BigInt?
+  message_id          BigInt?
+  channel_id          BigInt?
+  active_effects      active_effects[]
+  battle_instances    battle_instances?
+  battle_logs         battle_logs[]
+  event_participants  event_participants[]
+  player_battle_stats player_battle_stats[]
+}
+
+model monster_skills {
+  skill_id          Int                @id @default(autoincrement())
+  monster_id        Int?
+  skill_name        String?            @db.VarChar(100)
+  damage_mult       Float?             @default(1.0)
+  description       String?
+  monster_templates monster_templates? @relation(fields: [monster_id], references: [monster_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model monster_templates {
+  monster_id         Int                @id @default(autoincrement())
+  name               String             @db.VarChar(100)
+  max_hp             Int
+  atk                Int
+  def                Int
+  toughness          Int
+  weakness           String[]           @db.VarChar(50)
+  image_url          String?
+  skills_description String?
+  rank               Int                @default(1)
+  faction            String?            @db.VarChar(100)
+  battle_instances   battle_instances[]
+  monster_skills     monster_skills[]
+}
+
+model path_skills {
+  skill_id        Int      @id @default(autoincrement())
+  path_id         Int?
+  action_type     String?  @db.VarChar(20)
+  multiplier      Decimal? @db.Decimal(4, 2)
+  break_value     Int?
+  description     String?
+  hp_cost_percent Int?     @default(0)
+  heal_percent    Int?     @default(0)
+  paths           paths?   @relation(fields: [path_id], references: [path_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model paths {
+  path_id         Int           @id @default(autoincrement())
+  path_name       String        @unique @db.VarChar(50)
+  discord_role_id BigInt        @unique
+  bonus_hp        Int?          @default(0)
+  bonus_atk       Int?          @default(0)
+  bonus_def       Int?          @default(0)
+  path_name_th    String?       @db.VarChar(50)
+  color_hex       String?       @db.VarChar(10)
+  icon_url        String?
+  path_skills     path_skills[]
+  users           users[]
+  npcs            npcs[]
+  light_cones     light_cones[]
+  relics          relics[]
+}
+
+model player_battle_stats {
+  event_id             Int
+  discord_id           BigInt
+  current_sp           Int?   @default(3)
+  current_ep           Int?   @default(0)
+  current_hp_in_battle Int?
+  current_hp           Int?
+  users                users  @relation(fields: [discord_id], references: [discord_id], onDelete: NoAction, onUpdate: NoAction)
+  events               events @relation(fields: [event_id], references: [event_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([event_id, discord_id])
+}
+
+model users {
+  uid                 Int                   @unique @default(autoincrement())
+  discord_id          BigInt                @id
+  username            String?               @db.VarChar(100)
+  display_name        String?               @db.VarChar(255)
+  char_name           String?               @db.VarChar(255)
+  path_id             Int?
+  external_link       String?
+  profile_img         String?
+  splash_img          String?
+  private_channel_id  BigInt?
+  base_hp             Int?                  @default(100)
+  base_atk            Int?                  @default(10)
+  base_def            Int?                  @default(10)
+  created_at          DateTime?             @default(now()) @db.Timestamptz(6)
+  element_id          Int?
+  sum_atk             Int?                  @default(0)
+  sum_hp              Int?                  @default(0)
+  sum_def             Int?                  @default(0)
+  player_battle_stats player_battle_stats[]
+  elements            elements?             @relation(fields: [element_id], references: [element_id], onDelete: NoAction, onUpdate: NoAction)
+  paths               paths?                @relation(fields: [path_id], references: [path_id], onDelete: NoAction, onUpdate: NoAction)
+  player_light_cones  player_light_cones[]
+  player_relics       player_relics[]
+}
+
+model npcs {
+  id          Int     @id @default(autoincrement())
+  name        String
+  faction     String // ฝ่าย เช่น "Astral Express", "Stellaron Hunters", "IPC"
+  profile_img String?
+  splash_img  String?
+
+  // Path และ ธาตุ (ใส่ ? ไว้เพื่อบอกว่าเป็น Optional ไม่มีก็ได้)
+  path_id    Int?
+  element_id Int?
+  paths      paths?    @relation(fields: [path_id], references: [path_id])
+  elements   elements? @relation(fields: [element_id], references: [element_id])
+
+  // --- ระบบเนื้อเรื่อง 5 พาร์ท ---
+  story_1           String?
+  is_story_1_locked Boolean @default(false) // พาร์ทแรกมักจะเปิดให้อ่านเลย
+
+  story_2           String?
+  is_story_2_locked Boolean @default(true) // พาร์ทอื่นๆ ล็อกไว้ก่อน
+
+  story_3           String?
+  is_story_3_locked Boolean @default(true)
+
+  story_4           String?
+  is_story_4_locked Boolean @default(true)
+
+  story_5           String?
+  is_story_5_locked Boolean @default(true)
+}
+
+// ข้อมูลต้นแบบ Light Cone (คลังแสงหลักของระบบ)
+model light_cones {
+  id          Int     @id @default(autoincrement())
+  name        String
+  rarity      Int // ระดับดาว: 3, 4, 5
+  image_url   String?
+  splash_url  String?
+  description String?
+
+  // ช่วงค่า ATK สำหรับนำไปสุ่มตอนดร็อปให้ผู้เล่น
+  min_atk Int
+  max_atk Int
+
+  path_id Int
+  paths   paths @relation(fields: [path_id], references: [path_id])
+
+  // ความสัมพันธ์ชี้ไปยังไอเทมที่ถูกสุ่มขึ้นมาจริงในระบบ
+  player_light_cones player_light_cones[]
+}
+
+// ระบบคลังแสง Light Cone ของผู้เล่นจริง (Inventory & Instance)
+model player_light_cones {
+  // ใช้ UUID เป็น String ID เพื่อให้ Discord Bot หรือหน้าเว็บอ้างอิงไอเทมชิ้นนี้ได้แบบเจาะจงและปลอดภัย
+  id String @id @default(uuid())
+
+  // ผูกกับไอเทมต้นแบบเพื่อดึงชื่อ ระดับดาว และรูปภาพมาแสดงผล
+  light_cone_id Int
+  light_cone    light_cones @relation(fields: [light_cone_id], references: [id], onDelete: Cascade)
+
+  // 👇 จุดสำคัญ: ชนิดข้อมูลของ user_id ต้องตรงกับ uid ในตาราง users
+  // ถ้า uid ใน users เป็น String (เช่น Discord ID) ให้ใช้ String ตามนี้ครับ
+  user_id Int
+  user    users @relation(fields: [user_id], references: [uid], onDelete: Cascade)
+
+  // ค่าพลัง ATK ที่สุ่มได้ตอนดร็อปไอเทมชิ้นนี้มา
+  rolled_atk Int
+
+  // ระบบสวมใส่ (Equip System)
+  is_equipped Boolean @default(false)
+  // ไอเทมชิ้นนี้ถูกสวมใส่ให้กับตัวละครตัวไหนอยู่ (เว้นว่างได้ถ้าเก็บไว้ในกระเป๋าเฉยๆ)
+  equipped_to Int?
+
+  // ระบบล็อกไอเทมกันย่อยทิ้ง (Lock System)
+  is_locked Boolean @default(false)
+
+  obtained_at DateTime @default(now())
+
+  @@index([user_id]) // ทำ Index เพื่อให้บอทหรือเว็บดึงคลังแสงของผู้เล่นคนนั้นๆ ออกมาได้รวดเร็ว
+}
+
+// ข้อมูลต้นแบบ Relic (Master Data)
+model relics {
+  id          Int     @id @default(autoincrement())
+  name        String
+  set_name    String
+  piece_type  String
+  rarity      Int
+  image_url   String?
+  splash_url  String?
+  description String?
+  effect_code String?
+  effect_desc String?
+
+  min_stat Float
+  max_stat Float
+
+  // สำหรับ Path ที่ต้องสุ่มค่าที่ 2 (ลบล้าง, อนุรักษ์)
+  min_stat_2 Float?
+  max_stat_2 Float?
+
+  path_id       Int
+  paths         paths           @relation(fields: [path_id], references: [path_id])
+  player_relics player_relics[]
+}
+
+// ระบบคลัง Relic ของผู้เล่นจริง (Inventory)
+model player_relics {
+  id       String @id @default(uuid())
+  relic_id Int
+  relic    relics @relation(fields: [relic_id], references: [id], onDelete: Cascade)
+  user_id  Int
+  user     users  @relation(fields: [user_id], references: [uid], onDelete: Cascade)
+
+  // ค่าที่สุ่มได้ตอนดรอป
+  rolled_stat   Float
+  rolled_stat_2 Float? // ค่าสเตตัสตัวที่ 2 ที่สุ่มได้
+
+  is_equipped Boolean @default(false)
+  equipped_to Int?
+
+  is_locked   Boolean  @default(false)
+  obtained_at DateTime @default(now())
+
+  @@index([user_id])
+}
