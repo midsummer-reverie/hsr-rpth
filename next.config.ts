@@ -4,11 +4,7 @@ const nextConfig: NextConfig = {
   /* config options here */
   serverExternalPackages: ['@prisma/client'],
   
-  // บังคับข้ามการตรวจ ESLint ทั้งหมดตอนบิลด์เว็บ
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  // บังคับข้ามการตรวจความปลอดภัยของ TypeScript ทั้งหมดตอนบิลด์เว็บ
+  // บังคับข้ามการตรวจความปลอดภัยของ TypeScript (ตัวนี้ยังใช้ได้ใน Next 16 ครับ)
   typescript: {
     ignoreBuildErrors: true,
   },
