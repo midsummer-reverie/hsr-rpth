@@ -13,7 +13,7 @@ export default function Loading() {
   return (
     <div 
       className="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
-      style={{ ...themeStyles, backgroundColor: '#0b0b10' }}
+      style={{ ...themeStyles, backgroundColor: '#0B0B12' }}
     >
       <style dangerouslySetInnerHTML={{__html: `
         @import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');

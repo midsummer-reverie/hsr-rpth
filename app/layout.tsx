@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import type { Viewport } from "next";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -11,6 +12,10 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+export const viewport: Viewport = {
+  themeColor: "#0B0B12", // บังคับให้ขอบบราวเซอร์บนมือถือเป็นสีดาร์คโหมด
+};
 
 export const metadata: Metadata = {
   title: "Honkai: Star Rail - RoleplayTH",

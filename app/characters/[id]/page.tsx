@@ -73,7 +73,7 @@ export default async function CharacterDetail({ params }: { params: Promise<{ id
 
       {/* ================= LEFT SIDE: Character Splash Art ================= */}
       <section 
-        className="relative w-full md:w-[40%] h-[50vh] md:h-screen flex items-center justify-center p-8 stagger-left"
+        className="relative w-full md:w-[40%] h-[50vh] md:min-h-screen flex items-center justify-center p-8 stagger-left"
         style={{ '--delay': '0.1s' } as React.CSSProperties}
       >
         <Link href="/characters" className="absolute top-8 left-8 z-30 text-[#E5C57F] hover:underline tracking-widest text-sm drop-shadow-md">
