@@ -305,3 +305,14 @@ model player_relics {
 
   @@index([user_id])
 }
+
+model Clue {
+  id         Int      @id @default(autoincrement())
+  title      String
+  type       String // ประเภท: หนังสือและเอกสาร / คำบอกเล่า / สิ่งของ / จุดสังเกตในสถานที่
+  status     String   @default("RECORDED")
+  details    String // รายละเอียดเบาะแส (รองรับ HTML เพื่อทำตัวหนา/เอียง)
+  discoverer String? // ชื่อผู้เล่นที่ค้นพบ
+  image_url  String? // ลิงก์รูปภาพ (ถ้ามี)
+  created_at DateTime @default(now())
+}

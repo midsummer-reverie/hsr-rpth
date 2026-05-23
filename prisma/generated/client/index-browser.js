@@ -331,6 +331,17 @@ exports.Prisma.Player_relicsScalarFieldEnum = {
   obtained_at: 'obtained_at'
 };
 
+exports.Prisma.ClueScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  type: 'type',
+  status: 'status',
+  details: 'details',
+  discoverer: 'discoverer',
+  image_url: 'image_url',
+  created_at: 'created_at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -364,7 +375,8 @@ exports.Prisma.ModelName = {
   light_cones: 'light_cones',
   player_light_cones: 'player_light_cones',
   relics: 'relics',
-  player_relics: 'player_relics'
+  player_relics: 'player_relics',
+  Clue: 'Clue'
 };
 
 /**

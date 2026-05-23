@@ -1,7 +1,11 @@
-// app/page.tsx
 import Link from 'next/link';
+import prisma from '@/lib/prisma'; // เพิ่มการเชื่อมต่อ Database
+import ClueBoard from './components/ClueBoard'; // นำเข้า Component กระดานเบาะแสที่เราแยกไว้
 
-export default function Home() {
+// บังคับให้ Next.js ดึงข้อมูลสดใหม่จาก Database เสมอ (ไม่ใช้ Cache)
+export const dynamic = 'force-dynamic';
+
+export default async function Home() {
   // กำหนด CSS Variables ธีม HSR 
   const themeStyles = {
     '--hsr-gold': '#E5C57F',
@@ -23,13 +27,12 @@ export default function Home() {
     { id: '06', title: 'รายการอุปกรณ์', subtitle: 'Relics & Light Cones', href: '/equipment' },
   ];
 
-  // ข้อมูลจำลองสำหรับ System Logs
-  const systemLogs = [
-    { id: 'SYS-091', type: 'UPDATE', title: 'Penacony Dreamscape Maps Synchronized', status: 'COMPLETED' },
-    { id: 'SYS-092', type: 'WARNING', title: 'Stellaron Energy Fluctuation Detected', status: 'ANALYZING' },
-    { id: 'SYS-093', type: 'RECORD', title: 'New Curio Registered: Fragment of an Enigma', status: 'ARCHIVED' },
-    { id: 'SYS-094', type: 'NETWORK', title: 'Interastral Peace Broadcast Connection', status: 'STABLE' },
-  ];
+  // ดึงเบาะแส 4 อันล่าสุดจากตาราง Clue ใน Database
+  // *หากฟ้อง Error ว่าหา 'clue' ไม่เจอ ให้รันคำสั่ง npx prisma generate ก่อนนะครับ*
+  const latestClues = await prisma.clue.findMany({
+    take: 4,
+    orderBy: { created_at: 'desc' }
+  });
 
   return (
     <main 
@@ -169,61 +172,12 @@ export default function Home() {
           </div>
         </div>
 
-        {/* System Logs Section */}
-        <div className="relative">
-          
-          {/* Header ของ Logs (ดันขึ้นมา) */}
-          <div 
-            className="flex items-end justify-between mb-6 border-b pb-2 stagger-up" 
-            style={{ borderColor: 'var(--hsr-border)', '--delay': '0.3s' } as React.CSSProperties}
-          >
-            <h2 className="text-xl font-light tracking-widest text-white animate-text-glow">
-              SYSTEM LOG: <span style={{ color: 'var(--hsr-gold)' }}>RECENT ENTRIES</span>
-            </h2>
-            <span className="text-xs tracking-widest text-[#E5C57F] animate-pulse">STATUS: ONLINE</span>
-          </div>
-
-          {/* การ์ด Log แต่ละใบ ทยอยดันขึ้นมาตามคิว */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {systemLogs.map((log, index) => (
-              <div 
-                key={log.id} 
-                className="relative p-5 flex flex-col gap-2 overflow-hidden cursor-default stagger-up"
-                style={{ 
-                  backgroundColor: 'var(--hsr-panel-bg)', 
-                  border: '1px solid var(--hsr-border)',
-                  '--delay': `${0.4 + (index * 0.1)}s`
-                } as React.CSSProperties}
-              >
-                <div className="flex justify-between items-center">
-                  <span className="text-[10px] font-mono tracking-widest text-gray-400">{log.id}</span>
-                  <span className={`text-[10px] font-bold tracking-wider px-2 py-0.5 rounded-sm ${log.status === 'WARNING' || log.status === 'ANALYZING' ? 'bg-red-900/50 text-red-400' : 'bg-[#E5C57F]/10 text-[#E5C57F]'}`}>
-                    {log.status}
-                  </span>
-                </div>
-                
-                <p className="text-base font-medium text-gray-200 mt-1">{log.title}</p>
-                <p className="text-xs text-gray-500 font-mono mt-2">CLASS: {log.type}</p>
-
-                {/* ลายน้ำไอคอน */}
-                <div 
-                  className="absolute right-[-10%] bottom-[-20%] w-32 h-32 opacity-[0.03] pointer-events-none"
-                  style={{
-                    backgroundColor: 'white',
-                    maskImage: 'var(--icon-mask-url)',
-                    WebkitMaskImage: 'var(--icon-mask-url)',
-                    maskSize: 'contain',
-                    WebkitMaskSize: 'contain',
-                    maskRepeat: 'no-repeat',
-                    WebkitMaskRepeat: 'no-repeat',
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
+        {/* ================= เรียกใช้ Component ระบบกระดานเบาะแส ================= */}
+        {/* ส่งข้อมูล latestClues ที่ดึงมาจาก DB ไปให้ และสั่งให้แสดงปุ่ม 'VIEW ALL ARCHIVES' */}
+        <ClueBoard clues={latestClues} showAllButton={true} />
 
       </section>
+
     </main>
   );
 }

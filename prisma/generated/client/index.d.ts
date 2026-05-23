@@ -98,6 +98,11 @@ export type relics = $Result.DefaultSelection<Prisma.$relicsPayload>
  * 
  */
 export type player_relics = $Result.DefaultSelection<Prisma.$player_relicsPayload>
+/**
+ * Model Clue
+ * 
+ */
+export type Clue = $Result.DefaultSelection<Prisma.$CluePayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -389,6 +394,16 @@ export class PrismaClient<
     * ```
     */
   get player_relics(): Prisma.player_relicsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.clue`: Exposes CRUD operations for the **Clue** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Clues
+    * const clues = await prisma.clue.findMany()
+    * ```
+    */
+  get clue(): Prisma.ClueDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -839,7 +854,8 @@ export namespace Prisma {
     light_cones: 'light_cones',
     player_light_cones: 'player_light_cones',
     relics: 'relics',
-    player_relics: 'player_relics'
+    player_relics: 'player_relics',
+    Clue: 'Clue'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -855,7 +871,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "active_effects" | "battle_instances" | "battle_logs" | "elements" | "event_participants" | "events" | "monster_skills" | "monster_templates" | "path_skills" | "paths" | "player_battle_stats" | "users" | "npcs" | "light_cones" | "player_light_cones" | "relics" | "player_relics"
+      modelProps: "active_effects" | "battle_instances" | "battle_logs" | "elements" | "event_participants" | "events" | "monster_skills" | "monster_templates" | "path_skills" | "paths" | "player_battle_stats" | "users" | "npcs" | "light_cones" | "player_light_cones" | "relics" | "player_relics" | "clue"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2117,6 +2133,80 @@ export namespace Prisma {
           }
         }
       }
+      Clue: {
+        payload: Prisma.$CluePayload<ExtArgs>
+        fields: Prisma.ClueFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ClueFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CluePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ClueFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CluePayload>
+          }
+          findFirst: {
+            args: Prisma.ClueFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CluePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ClueFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CluePayload>
+          }
+          findMany: {
+            args: Prisma.ClueFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CluePayload>[]
+          }
+          create: {
+            args: Prisma.ClueCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CluePayload>
+          }
+          createMany: {
+            args: Prisma.ClueCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ClueCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CluePayload>[]
+          }
+          delete: {
+            args: Prisma.ClueDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CluePayload>
+          }
+          update: {
+            args: Prisma.ClueUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CluePayload>
+          }
+          deleteMany: {
+            args: Prisma.ClueDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ClueUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ClueUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CluePayload>[]
+          }
+          upsert: {
+            args: Prisma.ClueUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CluePayload>
+          }
+          aggregate: {
+            args: Prisma.ClueAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateClue>
+          }
+          groupBy: {
+            args: Prisma.ClueGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ClueGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ClueCountArgs<ExtArgs>
+            result: $Utils.Optional<ClueCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2242,6 +2332,7 @@ export namespace Prisma {
     player_light_cones?: player_light_conesOmit
     relics?: relicsOmit
     player_relics?: player_relicsOmit
+    clue?: ClueOmit
   }
 
   /* Types for Logging */
@@ -23256,6 +23347,1079 @@ export namespace Prisma {
 
 
   /**
+   * Model Clue
+   */
+
+  export type AggregateClue = {
+    _count: ClueCountAggregateOutputType | null
+    _avg: ClueAvgAggregateOutputType | null
+    _sum: ClueSumAggregateOutputType | null
+    _min: ClueMinAggregateOutputType | null
+    _max: ClueMaxAggregateOutputType | null
+  }
+
+  export type ClueAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type ClueSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type ClueMinAggregateOutputType = {
+    id: number | null
+    title: string | null
+    type: string | null
+    status: string | null
+    details: string | null
+    discoverer: string | null
+    image_url: string | null
+    created_at: Date | null
+  }
+
+  export type ClueMaxAggregateOutputType = {
+    id: number | null
+    title: string | null
+    type: string | null
+    status: string | null
+    details: string | null
+    discoverer: string | null
+    image_url: string | null
+    created_at: Date | null
+  }
+
+  export type ClueCountAggregateOutputType = {
+    id: number
+    title: number
+    type: number
+    status: number
+    details: number
+    discoverer: number
+    image_url: number
+    created_at: number
+    _all: number
+  }
+
+
+  export type ClueAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type ClueSumAggregateInputType = {
+    id?: true
+  }
+
+  export type ClueMinAggregateInputType = {
+    id?: true
+    title?: true
+    type?: true
+    status?: true
+    details?: true
+    discoverer?: true
+    image_url?: true
+    created_at?: true
+  }
+
+  export type ClueMaxAggregateInputType = {
+    id?: true
+    title?: true
+    type?: true
+    status?: true
+    details?: true
+    discoverer?: true
+    image_url?: true
+    created_at?: true
+  }
+
+  export type ClueCountAggregateInputType = {
+    id?: true
+    title?: true
+    type?: true
+    status?: true
+    details?: true
+    discoverer?: true
+    image_url?: true
+    created_at?: true
+    _all?: true
+  }
+
+  export type ClueAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Clue to aggregate.
+     */
+    where?: ClueWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Clues to fetch.
+     */
+    orderBy?: ClueOrderByWithRelationInput | ClueOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ClueWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Clues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Clues.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Clues
+    **/
+    _count?: true | ClueCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ClueAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ClueSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ClueMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ClueMaxAggregateInputType
+  }
+
+  export type GetClueAggregateType<T extends ClueAggregateArgs> = {
+        [P in keyof T & keyof AggregateClue]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateClue[P]>
+      : GetScalarType<T[P], AggregateClue[P]>
+  }
+
+
+
+
+  export type ClueGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ClueWhereInput
+    orderBy?: ClueOrderByWithAggregationInput | ClueOrderByWithAggregationInput[]
+    by: ClueScalarFieldEnum[] | ClueScalarFieldEnum
+    having?: ClueScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ClueCountAggregateInputType | true
+    _avg?: ClueAvgAggregateInputType
+    _sum?: ClueSumAggregateInputType
+    _min?: ClueMinAggregateInputType
+    _max?: ClueMaxAggregateInputType
+  }
+
+  export type ClueGroupByOutputType = {
+    id: number
+    title: string
+    type: string
+    status: string
+    details: string
+    discoverer: string | null
+    image_url: string | null
+    created_at: Date
+    _count: ClueCountAggregateOutputType | null
+    _avg: ClueAvgAggregateOutputType | null
+    _sum: ClueSumAggregateOutputType | null
+    _min: ClueMinAggregateOutputType | null
+    _max: ClueMaxAggregateOutputType | null
+  }
+
+  type GetClueGroupByPayload<T extends ClueGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ClueGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ClueGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ClueGroupByOutputType[P]>
+            : GetScalarType<T[P], ClueGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ClueSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    type?: boolean
+    status?: boolean
+    details?: boolean
+    discoverer?: boolean
+    image_url?: boolean
+    created_at?: boolean
+  }, ExtArgs["result"]["clue"]>
+
+  export type ClueSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    type?: boolean
+    status?: boolean
+    details?: boolean
+    discoverer?: boolean
+    image_url?: boolean
+    created_at?: boolean
+  }, ExtArgs["result"]["clue"]>
+
+  export type ClueSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    type?: boolean
+    status?: boolean
+    details?: boolean
+    discoverer?: boolean
+    image_url?: boolean
+    created_at?: boolean
+  }, ExtArgs["result"]["clue"]>
+
+  export type ClueSelectScalar = {
+    id?: boolean
+    title?: boolean
+    type?: boolean
+    status?: boolean
+    details?: boolean
+    discoverer?: boolean
+    image_url?: boolean
+    created_at?: boolean
+  }
+
+  export type ClueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "type" | "status" | "details" | "discoverer" | "image_url" | "created_at", ExtArgs["result"]["clue"]>
+
+  export type $CluePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Clue"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      title: string
+      type: string
+      status: string
+      details: string
+      discoverer: string | null
+      image_url: string | null
+      created_at: Date
+    }, ExtArgs["result"]["clue"]>
+    composites: {}
+  }
+
+  type ClueGetPayload<S extends boolean | null | undefined | ClueDefaultArgs> = $Result.GetResult<Prisma.$CluePayload, S>
+
+  type ClueCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ClueFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ClueCountAggregateInputType | true
+    }
+
+  export interface ClueDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Clue'], meta: { name: 'Clue' } }
+    /**
+     * Find zero or one Clue that matches the filter.
+     * @param {ClueFindUniqueArgs} args - Arguments to find a Clue
+     * @example
+     * // Get one Clue
+     * const clue = await prisma.clue.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ClueFindUniqueArgs>(args: SelectSubset<T, ClueFindUniqueArgs<ExtArgs>>): Prisma__ClueClient<$Result.GetResult<Prisma.$CluePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Clue that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ClueFindUniqueOrThrowArgs} args - Arguments to find a Clue
+     * @example
+     * // Get one Clue
+     * const clue = await prisma.clue.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ClueFindUniqueOrThrowArgs>(args: SelectSubset<T, ClueFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ClueClient<$Result.GetResult<Prisma.$CluePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Clue that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClueFindFirstArgs} args - Arguments to find a Clue
+     * @example
+     * // Get one Clue
+     * const clue = await prisma.clue.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ClueFindFirstArgs>(args?: SelectSubset<T, ClueFindFirstArgs<ExtArgs>>): Prisma__ClueClient<$Result.GetResult<Prisma.$CluePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Clue that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClueFindFirstOrThrowArgs} args - Arguments to find a Clue
+     * @example
+     * // Get one Clue
+     * const clue = await prisma.clue.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ClueFindFirstOrThrowArgs>(args?: SelectSubset<T, ClueFindFirstOrThrowArgs<ExtArgs>>): Prisma__ClueClient<$Result.GetResult<Prisma.$CluePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Clues that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClueFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Clues
+     * const clues = await prisma.clue.findMany()
+     * 
+     * // Get first 10 Clues
+     * const clues = await prisma.clue.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const clueWithIdOnly = await prisma.clue.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ClueFindManyArgs>(args?: SelectSubset<T, ClueFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CluePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Clue.
+     * @param {ClueCreateArgs} args - Arguments to create a Clue.
+     * @example
+     * // Create one Clue
+     * const Clue = await prisma.clue.create({
+     *   data: {
+     *     // ... data to create a Clue
+     *   }
+     * })
+     * 
+     */
+    create<T extends ClueCreateArgs>(args: SelectSubset<T, ClueCreateArgs<ExtArgs>>): Prisma__ClueClient<$Result.GetResult<Prisma.$CluePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Clues.
+     * @param {ClueCreateManyArgs} args - Arguments to create many Clues.
+     * @example
+     * // Create many Clues
+     * const clue = await prisma.clue.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ClueCreateManyArgs>(args?: SelectSubset<T, ClueCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Clues and returns the data saved in the database.
+     * @param {ClueCreateManyAndReturnArgs} args - Arguments to create many Clues.
+     * @example
+     * // Create many Clues
+     * const clue = await prisma.clue.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Clues and only return the `id`
+     * const clueWithIdOnly = await prisma.clue.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ClueCreateManyAndReturnArgs>(args?: SelectSubset<T, ClueCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CluePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Clue.
+     * @param {ClueDeleteArgs} args - Arguments to delete one Clue.
+     * @example
+     * // Delete one Clue
+     * const Clue = await prisma.clue.delete({
+     *   where: {
+     *     // ... filter to delete one Clue
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ClueDeleteArgs>(args: SelectSubset<T, ClueDeleteArgs<ExtArgs>>): Prisma__ClueClient<$Result.GetResult<Prisma.$CluePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Clue.
+     * @param {ClueUpdateArgs} args - Arguments to update one Clue.
+     * @example
+     * // Update one Clue
+     * const clue = await prisma.clue.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ClueUpdateArgs>(args: SelectSubset<T, ClueUpdateArgs<ExtArgs>>): Prisma__ClueClient<$Result.GetResult<Prisma.$CluePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Clues.
+     * @param {ClueDeleteManyArgs} args - Arguments to filter Clues to delete.
+     * @example
+     * // Delete a few Clues
+     * const { count } = await prisma.clue.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ClueDeleteManyArgs>(args?: SelectSubset<T, ClueDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Clues.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClueUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Clues
+     * const clue = await prisma.clue.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ClueUpdateManyArgs>(args: SelectSubset<T, ClueUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Clues and returns the data updated in the database.
+     * @param {ClueUpdateManyAndReturnArgs} args - Arguments to update many Clues.
+     * @example
+     * // Update many Clues
+     * const clue = await prisma.clue.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Clues and only return the `id`
+     * const clueWithIdOnly = await prisma.clue.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ClueUpdateManyAndReturnArgs>(args: SelectSubset<T, ClueUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CluePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Clue.
+     * @param {ClueUpsertArgs} args - Arguments to update or create a Clue.
+     * @example
+     * // Update or create a Clue
+     * const clue = await prisma.clue.upsert({
+     *   create: {
+     *     // ... data to create a Clue
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Clue we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ClueUpsertArgs>(args: SelectSubset<T, ClueUpsertArgs<ExtArgs>>): Prisma__ClueClient<$Result.GetResult<Prisma.$CluePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Clues.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClueCountArgs} args - Arguments to filter Clues to count.
+     * @example
+     * // Count the number of Clues
+     * const count = await prisma.clue.count({
+     *   where: {
+     *     // ... the filter for the Clues we want to count
+     *   }
+     * })
+    **/
+    count<T extends ClueCountArgs>(
+      args?: Subset<T, ClueCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ClueCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Clue.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClueAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ClueAggregateArgs>(args: Subset<T, ClueAggregateArgs>): Prisma.PrismaPromise<GetClueAggregateType<T>>
+
+    /**
+     * Group by Clue.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ClueGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ClueGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ClueGroupByArgs['orderBy'] }
+        : { orderBy?: ClueGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ClueGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetClueGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Clue model
+   */
+  readonly fields: ClueFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Clue.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ClueClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Clue model
+   */
+  interface ClueFieldRefs {
+    readonly id: FieldRef<"Clue", 'Int'>
+    readonly title: FieldRef<"Clue", 'String'>
+    readonly type: FieldRef<"Clue", 'String'>
+    readonly status: FieldRef<"Clue", 'String'>
+    readonly details: FieldRef<"Clue", 'String'>
+    readonly discoverer: FieldRef<"Clue", 'String'>
+    readonly image_url: FieldRef<"Clue", 'String'>
+    readonly created_at: FieldRef<"Clue", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Clue findUnique
+   */
+  export type ClueFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clue
+     */
+    select?: ClueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clue
+     */
+    omit?: ClueOmit<ExtArgs> | null
+    /**
+     * Filter, which Clue to fetch.
+     */
+    where: ClueWhereUniqueInput
+  }
+
+  /**
+   * Clue findUniqueOrThrow
+   */
+  export type ClueFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clue
+     */
+    select?: ClueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clue
+     */
+    omit?: ClueOmit<ExtArgs> | null
+    /**
+     * Filter, which Clue to fetch.
+     */
+    where: ClueWhereUniqueInput
+  }
+
+  /**
+   * Clue findFirst
+   */
+  export type ClueFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clue
+     */
+    select?: ClueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clue
+     */
+    omit?: ClueOmit<ExtArgs> | null
+    /**
+     * Filter, which Clue to fetch.
+     */
+    where?: ClueWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Clues to fetch.
+     */
+    orderBy?: ClueOrderByWithRelationInput | ClueOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Clues.
+     */
+    cursor?: ClueWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Clues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Clues.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Clues.
+     */
+    distinct?: ClueScalarFieldEnum | ClueScalarFieldEnum[]
+  }
+
+  /**
+   * Clue findFirstOrThrow
+   */
+  export type ClueFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clue
+     */
+    select?: ClueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clue
+     */
+    omit?: ClueOmit<ExtArgs> | null
+    /**
+     * Filter, which Clue to fetch.
+     */
+    where?: ClueWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Clues to fetch.
+     */
+    orderBy?: ClueOrderByWithRelationInput | ClueOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Clues.
+     */
+    cursor?: ClueWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Clues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Clues.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Clues.
+     */
+    distinct?: ClueScalarFieldEnum | ClueScalarFieldEnum[]
+  }
+
+  /**
+   * Clue findMany
+   */
+  export type ClueFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clue
+     */
+    select?: ClueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clue
+     */
+    omit?: ClueOmit<ExtArgs> | null
+    /**
+     * Filter, which Clues to fetch.
+     */
+    where?: ClueWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Clues to fetch.
+     */
+    orderBy?: ClueOrderByWithRelationInput | ClueOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Clues.
+     */
+    cursor?: ClueWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Clues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Clues.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Clues.
+     */
+    distinct?: ClueScalarFieldEnum | ClueScalarFieldEnum[]
+  }
+
+  /**
+   * Clue create
+   */
+  export type ClueCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clue
+     */
+    select?: ClueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clue
+     */
+    omit?: ClueOmit<ExtArgs> | null
+    /**
+     * The data needed to create a Clue.
+     */
+    data: XOR<ClueCreateInput, ClueUncheckedCreateInput>
+  }
+
+  /**
+   * Clue createMany
+   */
+  export type ClueCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Clues.
+     */
+    data: ClueCreateManyInput | ClueCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Clue createManyAndReturn
+   */
+  export type ClueCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clue
+     */
+    select?: ClueSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clue
+     */
+    omit?: ClueOmit<ExtArgs> | null
+    /**
+     * The data used to create many Clues.
+     */
+    data: ClueCreateManyInput | ClueCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Clue update
+   */
+  export type ClueUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clue
+     */
+    select?: ClueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clue
+     */
+    omit?: ClueOmit<ExtArgs> | null
+    /**
+     * The data needed to update a Clue.
+     */
+    data: XOR<ClueUpdateInput, ClueUncheckedUpdateInput>
+    /**
+     * Choose, which Clue to update.
+     */
+    where: ClueWhereUniqueInput
+  }
+
+  /**
+   * Clue updateMany
+   */
+  export type ClueUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Clues.
+     */
+    data: XOR<ClueUpdateManyMutationInput, ClueUncheckedUpdateManyInput>
+    /**
+     * Filter which Clues to update
+     */
+    where?: ClueWhereInput
+    /**
+     * Limit how many Clues to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Clue updateManyAndReturn
+   */
+  export type ClueUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clue
+     */
+    select?: ClueSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clue
+     */
+    omit?: ClueOmit<ExtArgs> | null
+    /**
+     * The data used to update Clues.
+     */
+    data: XOR<ClueUpdateManyMutationInput, ClueUncheckedUpdateManyInput>
+    /**
+     * Filter which Clues to update
+     */
+    where?: ClueWhereInput
+    /**
+     * Limit how many Clues to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Clue upsert
+   */
+  export type ClueUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clue
+     */
+    select?: ClueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clue
+     */
+    omit?: ClueOmit<ExtArgs> | null
+    /**
+     * The filter to search for the Clue to update in case it exists.
+     */
+    where: ClueWhereUniqueInput
+    /**
+     * In case the Clue found by the `where` argument doesn't exist, create a new Clue with this data.
+     */
+    create: XOR<ClueCreateInput, ClueUncheckedCreateInput>
+    /**
+     * In case the Clue was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ClueUpdateInput, ClueUncheckedUpdateInput>
+  }
+
+  /**
+   * Clue delete
+   */
+  export type ClueDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clue
+     */
+    select?: ClueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clue
+     */
+    omit?: ClueOmit<ExtArgs> | null
+    /**
+     * Filter which Clue to delete.
+     */
+    where: ClueWhereUniqueInput
+  }
+
+  /**
+   * Clue deleteMany
+   */
+  export type ClueDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Clues to delete
+     */
+    where?: ClueWhereInput
+    /**
+     * Limit how many Clues to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Clue without action
+   */
+  export type ClueDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Clue
+     */
+    select?: ClueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Clue
+     */
+    omit?: ClueOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -23529,6 +24693,20 @@ export namespace Prisma {
   };
 
   export type Player_relicsScalarFieldEnum = (typeof Player_relicsScalarFieldEnum)[keyof typeof Player_relicsScalarFieldEnum]
+
+
+  export const ClueScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    type: 'type',
+    status: 'status',
+    details: 'details',
+    discoverer: 'discoverer',
+    image_url: 'image_url',
+    created_at: 'created_at'
+  };
+
+  export type ClueScalarFieldEnum = (typeof ClueScalarFieldEnum)[keyof typeof ClueScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -25064,6 +26242,75 @@ export namespace Prisma {
     obtained_at?: DateTimeWithAggregatesFilter<"player_relics"> | Date | string
   }
 
+  export type ClueWhereInput = {
+    AND?: ClueWhereInput | ClueWhereInput[]
+    OR?: ClueWhereInput[]
+    NOT?: ClueWhereInput | ClueWhereInput[]
+    id?: IntFilter<"Clue"> | number
+    title?: StringFilter<"Clue"> | string
+    type?: StringFilter<"Clue"> | string
+    status?: StringFilter<"Clue"> | string
+    details?: StringFilter<"Clue"> | string
+    discoverer?: StringNullableFilter<"Clue"> | string | null
+    image_url?: StringNullableFilter<"Clue"> | string | null
+    created_at?: DateTimeFilter<"Clue"> | Date | string
+  }
+
+  export type ClueOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    details?: SortOrder
+    discoverer?: SortOrderInput | SortOrder
+    image_url?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+  }
+
+  export type ClueWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: ClueWhereInput | ClueWhereInput[]
+    OR?: ClueWhereInput[]
+    NOT?: ClueWhereInput | ClueWhereInput[]
+    title?: StringFilter<"Clue"> | string
+    type?: StringFilter<"Clue"> | string
+    status?: StringFilter<"Clue"> | string
+    details?: StringFilter<"Clue"> | string
+    discoverer?: StringNullableFilter<"Clue"> | string | null
+    image_url?: StringNullableFilter<"Clue"> | string | null
+    created_at?: DateTimeFilter<"Clue"> | Date | string
+  }, "id">
+
+  export type ClueOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    details?: SortOrder
+    discoverer?: SortOrderInput | SortOrder
+    image_url?: SortOrderInput | SortOrder
+    created_at?: SortOrder
+    _count?: ClueCountOrderByAggregateInput
+    _avg?: ClueAvgOrderByAggregateInput
+    _max?: ClueMaxOrderByAggregateInput
+    _min?: ClueMinOrderByAggregateInput
+    _sum?: ClueSumOrderByAggregateInput
+  }
+
+  export type ClueScalarWhereWithAggregatesInput = {
+    AND?: ClueScalarWhereWithAggregatesInput | ClueScalarWhereWithAggregatesInput[]
+    OR?: ClueScalarWhereWithAggregatesInput[]
+    NOT?: ClueScalarWhereWithAggregatesInput | ClueScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Clue"> | number
+    title?: StringWithAggregatesFilter<"Clue"> | string
+    type?: StringWithAggregatesFilter<"Clue"> | string
+    status?: StringWithAggregatesFilter<"Clue"> | string
+    details?: StringWithAggregatesFilter<"Clue"> | string
+    discoverer?: StringNullableWithAggregatesFilter<"Clue"> | string | null
+    image_url?: StringNullableWithAggregatesFilter<"Clue"> | string | null
+    created_at?: DateTimeWithAggregatesFilter<"Clue"> | Date | string
+  }
+
   export type active_effectsCreateInput = {
     discord_id?: bigint | number | null
     effect_name?: string | null
@@ -26557,6 +27804,80 @@ export namespace Prisma {
     obtained_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type ClueCreateInput = {
+    title: string
+    type: string
+    status?: string
+    details: string
+    discoverer?: string | null
+    image_url?: string | null
+    created_at?: Date | string
+  }
+
+  export type ClueUncheckedCreateInput = {
+    id?: number
+    title: string
+    type: string
+    status?: string
+    details: string
+    discoverer?: string | null
+    image_url?: string | null
+    created_at?: Date | string
+  }
+
+  export type ClueUpdateInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    details?: StringFieldUpdateOperationsInput | string
+    discoverer?: NullableStringFieldUpdateOperationsInput | string | null
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClueUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    details?: StringFieldUpdateOperationsInput | string
+    discoverer?: NullableStringFieldUpdateOperationsInput | string | null
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClueCreateManyInput = {
+    id?: number
+    title: string
+    type: string
+    status?: string
+    details: string
+    discoverer?: string | null
+    image_url?: string | null
+    created_at?: Date | string
+  }
+
+  export type ClueUpdateManyMutationInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    details?: StringFieldUpdateOperationsInput | string
+    discoverer?: NullableStringFieldUpdateOperationsInput | string | null
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ClueUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    details?: StringFieldUpdateOperationsInput | string
+    discoverer?: NullableStringFieldUpdateOperationsInput | string | null
+    image_url?: NullableStringFieldUpdateOperationsInput | string | null
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -27997,6 +29318,47 @@ export namespace Prisma {
     rolled_stat?: SortOrder
     rolled_stat_2?: SortOrder
     equipped_to?: SortOrder
+  }
+
+  export type ClueCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    details?: SortOrder
+    discoverer?: SortOrder
+    image_url?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type ClueAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type ClueMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    details?: SortOrder
+    discoverer?: SortOrder
+    image_url?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type ClueMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    type?: SortOrder
+    status?: SortOrder
+    details?: SortOrder
+    discoverer?: SortOrder
+    image_url?: SortOrder
+    created_at?: SortOrder
+  }
+
+  export type ClueSumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type eventsCreateNestedOneWithoutActive_effectsInput = {

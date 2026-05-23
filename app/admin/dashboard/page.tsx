@@ -1,4 +1,3 @@
-// app/admin/dashboard/page.tsx
 import Link from 'next/link';
 
 export default function AdminDashboard() {
@@ -11,7 +10,8 @@ export default function AdminDashboard() {
   const adminTools = [
     { id: '01', title: 'COMBAT SYSTEM', subtitle: 'ระบบคำนวณการต่อสู้และดาเมจ', href: '/admin/combat', icon: '⚔️', color: '#E5C57F' },
     { id: '02', title: 'PERFORMANCE', subtitle: 'สรุปผลงานและการเติบโตของผู้เล่น', href: '/admin/performance', icon: '📊', color: '#60A5FA' },
-    { id: '03', title: 'SPARE SPACE', subtitle: 'เว้นไว้ก่อน ใส่ไรดี', href: '/npcs', icon: '📜', color: '#F87171' },
+    // 👇 แก้ไขตรงนี้: เปลี่ยน SPARE SPACE เป็นทางเข้าจัดการเบาะแส 👇
+    { id: '03', title: 'CLUE EDITOR', subtitle: 'จัดการข้อมูลเบาะแสการสืบสวน', href: '/admin/dashboard/clues', icon: '🔍', color: '#F87171' },
     { id: '04', title: 'INTEL EDITOR', subtitle: 'จัดการเนื้อเรื่อง NPC และฝ่ายต่างๆ', href: '/admin/dashboard/database', icon: '📜', color: '#F87171' },
   ];
 
@@ -20,7 +20,6 @@ export default function AdminDashboard() {
       className="min-h-screen text-gray-200 relative flex flex-col items-center justify-center p-6 md:p-12"
       style={{ ...themeStyles, backgroundColor: '#0B0B12' }}
     >
-      {/* 👇 เพิ่มบล็อก Style ดึงฟอนต์กลับมาให้เหมือนหน้าอื่น 👇 */}
       <style dangerouslySetInnerHTML={{__html: `
         @import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
       `}} />
