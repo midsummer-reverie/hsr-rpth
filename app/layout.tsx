@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Honkai: Star Rail - RoleplayTH",
-  description: "ระบบจัดการฐานข้อมูลและบอทสำหรับโปรเจกต์ HSR RP",
+  description: "หน้าเว็บไซต์สำหรับกิจกรรม Honkai: Star Rail RPTH",
   icons: {
     icon: "https://iili.io/CHYGJef.png",
     apple: "https://iili.io/CHYGJef.png",
