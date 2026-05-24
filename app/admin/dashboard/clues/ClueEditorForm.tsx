@@ -7,12 +7,11 @@ export default function ClueEditorForm({ characters }: { characters: any[] }) {
   const [message, setMessage] = useState('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // State สำหรับเก็บข้อมูลฟอร์ม
   const [formData, setFormData] = useState({
     title: '',
     type: 'DOCUMENT',
     status: 'RECORDED',
-    discoverer: '', // จะเก็บค่าเป็นชื่อตัวละครที่ถูกเลือก
+    discoverer: '',
     image_url: '',
     details: ''
   });
@@ -20,14 +19,12 @@ export default function ClueEditorForm({ characters }: { characters: any[] }) {
   const themeStyles = {
     '--hsr-gold': '#E5C57F',
     '--hsr-border': 'rgba(229, 197, 127, 0.2)',
-    fontFamily: '"Google Sans", sans-serif'
   } as React.CSSProperties;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // ฟังก์ชันแทรก HTML Tags สำหรับจัดรูปแบบข้อความ
   const insertFormatting = (tag: string) => {
     const textarea = textareaRef.current;
     if (!textarea) return;
@@ -78,13 +75,31 @@ export default function ClueEditorForm({ characters }: { characters: any[] }) {
   };
 
   return (
-    <main className="min-h-screen text-gray-200 p-6 md:p-12" style={{ ...themeStyles, backgroundColor: '#0B0B12' }}>
+    // 👇 เติมคลาส font-sans เข้าไปตรงนี้ เพื่อเรียกใช้ค่าจาก Tailwind 👇
+    <main className="min-h-screen text-gray-200 p-6 md:p-12 font-sans" style={{ ...themeStyles, backgroundColor: '#0B0B12' }}>
+      
+      {/* เก็บไว้แค่ Animation */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
+        @keyframes slideInUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .stagger-up {
+          opacity: 0;
+          animation: slideInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          animation-delay: var(--delay, 0s);
+        }
+      `}} />
+
       <div className="max-w-4xl mx-auto">
-        <Link href="/admin/dashboard" className="text-[#E5C57F] hover:underline text-sm tracking-widest mb-8 inline-block">
-          ← BACK TO OVERSEER PORTAL
-        </Link>
+        <div className="stagger-up" style={{ '--delay': '0.1s' } as React.CSSProperties}>
+          <Link href="/admin/dashboard" className="text-[#E5C57F] hover:underline text-sm tracking-widest mb-8 inline-block">
+            ← BACK TO OVERSEER PORTAL
+          </Link>
+        </div>
         
-        <div className="mb-8 border-b pb-4" style={{ borderColor: 'var(--hsr-border)' }}>
+        <div className="mb-8 border-b pb-4 stagger-up" style={{ borderColor: 'var(--hsr-border)', '--delay': '0.2s' } as React.CSSProperties}>
           <h1 className="text-3xl font-light tracking-[0.2em] text-white uppercase">
             INTEL <span className="font-bold text-[#E5C57F]">ENTRY</span>
           </h1>
@@ -92,24 +107,22 @@ export default function ClueEditorForm({ characters }: { characters: any[] }) {
         </div>
 
         {message && (
-          <div className={`p-4 mb-6 text-sm tracking-wider uppercase border rounded-sm ${message.includes('✅') ? 'border-green-500/50 bg-green-900/20 text-green-400' : 'border-red-500/50 bg-red-900/20 text-red-400'}`}>
+          <div className={`p-4 mb-6 text-sm tracking-wider uppercase border rounded-sm stagger-up ${message.includes('✅') ? 'border-green-500/50 bg-green-900/20 text-green-400' : 'border-red-500/50 bg-red-900/20 text-red-400'}`} style={{ '--delay': '0.3s' } as React.CSSProperties}>
             {message}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-6 bg-white/5 p-6 md:p-8 rounded-sm border" style={{ borderColor: 'var(--hsr-border)' }}>
+        <form onSubmit={handleSubmit} className="space-y-6 bg-white/5 p-6 md:p-8 rounded-sm border stagger-up" style={{ borderColor: 'var(--hsr-border)', '--delay': '0.3s' } as React.CSSProperties}>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Title */}
             <div className="col-span-1 md:col-span-2">
               <label className="block text-[10px] text-gray-400 tracking-widest uppercase mb-2">Clue Title (หัวข้อเบาะแส) *</label>
-              <input required type="text" name="title" value={formData.title} onChange={handleChange} className="w-full bg-[#14141C] border text-white p-3 rounded-sm focus:outline-none focus:border-[#E5C57F] transition-colors" style={{ borderColor: 'var(--hsr-border)' }} placeholder="เช่น เศษผ้าเปื้อนคราบประหลาด" />
+              <input required type="text" name="title" value={formData.title} onChange={handleChange} className="w-full bg-[#14141C] border text-white p-3 rounded-sm focus:outline-none focus:border-[#E5C57F] transition-colors font-sans" style={{ borderColor: 'var(--hsr-border)' }} placeholder="เช่น เศษผ้าเปื้อนคราบประหลาด" />
             </div>
 
-            {/* Type */}
             <div>
               <label className="block text-[10px] text-gray-400 tracking-widest uppercase mb-2">Category (หมวดหมู่) *</label>
-              <select required name="type" value={formData.type} onChange={handleChange} className="w-full bg-[#14141C] border text-white p-3 rounded-sm focus:outline-none focus:border-[#E5C57F] transition-colors cursor-pointer" style={{ borderColor: 'var(--hsr-border)' }}>
+              <select required name="type" value={formData.type} onChange={handleChange} className="w-full bg-[#14141C] border text-white p-3 rounded-sm focus:outline-none focus:border-[#E5C57F] transition-colors cursor-pointer font-sans" style={{ borderColor: 'var(--hsr-border)' }}>
                 <option value="DOCUMENT">DOCUMENT (หนังสือและเอกสาร)</option>
                 <option value="TESTIMONY">TESTIMONY (คำบอกเล่า)</option>
                 <option value="ITEM">ITEM (สิ่งของ)</option>
@@ -117,10 +130,9 @@ export default function ClueEditorForm({ characters }: { characters: any[] }) {
               </select>
             </div>
 
-            {/* Status */}
             <div>
               <label className="block text-[10px] text-gray-400 tracking-widest uppercase mb-2">Status (สถานะ) *</label>
-              <select required name="status" value={formData.status} onChange={handleChange} className="w-full bg-[#14141C] border text-white p-3 rounded-sm focus:outline-none focus:border-[#E5C57F] transition-colors cursor-pointer" style={{ borderColor: 'var(--hsr-border)' }}>
+              <select required name="status" value={formData.status} onChange={handleChange} className="w-full bg-[#14141C] border text-white p-3 rounded-sm focus:outline-none focus:border-[#E5C57F] transition-colors cursor-pointer font-sans" style={{ borderColor: 'var(--hsr-border)' }}>
                 <option value="RECORDED">RECORDED (บันทึกแล้ว)</option>
                 <option value="INVESTIGATING">INVESTIGATING (กำลังสืบสวน)</option>
                 <option value="CRITICAL">CRITICAL (สำคัญมาก)</option>
@@ -130,38 +142,27 @@ export default function ClueEditorForm({ characters }: { characters: any[] }) {
 
             <div>
               <label className="block text-[10px] text-gray-400 tracking-widest uppercase mb-2">Discoverer (ผู้ค้นพบเบาะแส)</label>
-              <select 
-                name="discoverer" 
-                value={formData.discoverer} 
-                onChange={handleChange} 
-                className="w-full bg-[#14141C] border text-white p-3 rounded-sm focus:outline-none focus:border-[#E5C57F] transition-colors cursor-pointer" 
-                style={{ borderColor: 'var(--hsr-border)' }}
-              >
+              <select name="discoverer" value={formData.discoverer} onChange={handleChange} className="w-full bg-[#14141C] border text-white p-3 rounded-sm focus:outline-none focus:border-[#E5C57F] transition-colors cursor-pointer font-sans" style={{ borderColor: 'var(--hsr-border)' }}>
                 <option value="">-- ไม่ระบุ / เนื้อเรื่องหลัก (System) --</option>
-                {/* 👇 เปลี่ยนจาก char.id เป็น char.uid และ char.name เป็น char.char_name 👇 */}
                 {characters.map((char) => (
-                  <option key={char.uid} value={char.char_name}>
-                    {char.char_name}
-                  </option>
+                  <option key={char.uid} value={char.char_name}>{char.char_name}</option>
                 ))}
               </select>
             </div>
 
-            {/* Image URL */}
             <div>
               <label className="block text-[10px] text-gray-400 tracking-widest uppercase mb-2">Image URL (ลิงก์รูปภาพ)</label>
-              <input type="text" name="image_url" value={formData.image_url} onChange={handleChange} className="w-full bg-[#14141C] border text-white p-3 rounded-sm focus:outline-none focus:border-[#E5C57F] transition-colors" style={{ borderColor: 'var(--hsr-border)' }} placeholder="https://..." />
+              <input type="text" name="image_url" value={formData.image_url} onChange={handleChange} className="w-full bg-[#14141C] border text-white p-3 rounded-sm focus:outline-none focus:border-[#E5C57F] transition-colors font-sans" style={{ borderColor: 'var(--hsr-border)' }} placeholder="https://..." />
             </div>
           </div>
 
-          {/* Details */}
           <div className="pt-4">
             <label className="block text-[10px] text-gray-400 tracking-widest uppercase mb-2">Intelligence Details (รายละเอียดเบาะแส) *</label>
             <div className="flex gap-2 mb-2">
-              <button type="button" onClick={() => insertFormatting('b')} className="px-3 py-1 bg-[#14141C] border text-gray-300 rounded-sm hover:border-[#E5C57F] hover:text-[#E5C57F] transition-colors font-bold text-sm" style={{ borderColor: 'var(--hsr-border)' }}>B</button>
-              <button type="button" onClick={() => insertFormatting('i')} className="px-3 py-1 bg-[#14141C] border text-gray-300 rounded-sm hover:border-[#E5C57F] hover:text-[#E5C57F] transition-colors italic text-sm" style={{ borderColor: 'var(--hsr-border)' }}>I</button>
-              <button type="button" onClick={() => insertFormatting('u')} className="px-3 py-1 bg-[#14141C] border text-gray-300 rounded-sm hover:border-[#E5C57F] hover:text-[#E5C57F] transition-colors underline text-sm" style={{ borderColor: 'var(--hsr-border)' }}>U</button>
-              <button type="button" onClick={() => insertFormatting('br/')} className="px-3 py-1 bg-[#14141C] border text-gray-300 rounded-sm hover:border-[#E5C57F] hover:text-[#E5C57F] transition-colors text-xs tracking-widest" style={{ borderColor: 'var(--hsr-border)' }}>ขึ้นบรรทัดใหม่</button>
+              <button type="button" onClick={() => insertFormatting('b')} className="px-3 py-1 bg-[#14141C] border text-gray-300 rounded-sm hover:border-[#E5C57F] hover:text-[#E5C57F] transition-colors font-bold text-sm font-sans" style={{ borderColor: 'var(--hsr-border)' }}>B</button>
+              <button type="button" onClick={() => insertFormatting('i')} className="px-3 py-1 bg-[#14141C] border text-gray-300 rounded-sm hover:border-[#E5C57F] hover:text-[#E5C57F] transition-colors italic text-sm font-sans" style={{ borderColor: 'var(--hsr-border)' }}>I</button>
+              <button type="button" onClick={() => insertFormatting('u')} className="px-3 py-1 bg-[#14141C] border text-gray-300 rounded-sm hover:border-[#E5C57F] hover:text-[#E5C57F] transition-colors underline text-sm font-sans" style={{ borderColor: 'var(--hsr-border)' }}>U</button>
+              <button type="button" onClick={() => insertFormatting('br/')} className="px-3 py-1 bg-[#14141C] border text-gray-300 rounded-sm hover:border-[#E5C57F] hover:text-[#E5C57F] transition-colors text-xs tracking-widest font-sans" style={{ borderColor: 'var(--hsr-border)' }}>ขึ้นบรรทัดใหม่</button>
             </div>
 
             <textarea 
@@ -171,14 +172,14 @@ export default function ClueEditorForm({ characters }: { characters: any[] }) {
               value={formData.details} 
               onChange={handleChange} 
               rows={8}
-              className="w-full bg-[#14141C] border text-white p-4 rounded-sm focus:outline-none focus:border-[#E5C57F] transition-colors leading-relaxed" 
+              className="w-full bg-[#14141C] border text-white p-4 rounded-sm focus:outline-none focus:border-[#E5C57F] transition-colors leading-relaxed font-sans" 
               style={{ borderColor: 'var(--hsr-border)' }} 
               placeholder="กรอกรายละเอียดเบาะแส..." 
             />
           </div>
 
           <div className="pt-6 border-t flex justify-end" style={{ borderColor: 'var(--hsr-border)' }}>
-            <button type="submit" disabled={isSubmitting} className="bg-[#E5C57F]/10 text-[#E5C57F] border border-[#E5C57F] px-8 py-3 tracking-widest uppercase font-bold hover:bg-[#E5C57F] hover:text-black transition-all duration-300 disabled:opacity-50">
+            <button type="submit" disabled={isSubmitting} className="bg-[#E5C57F]/10 text-[#E5C57F] border border-[#E5C57F] px-8 py-3 tracking-widest uppercase font-bold hover:bg-[#E5C57F] hover:text-black transition-all duration-300 disabled:opacity-50 font-sans">
               {isSubmitting ? 'ENCRYPTING...' : 'SAVE RECORD'}
             </button>
           </div>

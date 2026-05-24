@@ -15,6 +15,12 @@
   --font-mono: var(--font-geist-mono);
 }
 
+@layer base {
+  html, body, input, select, textarea, button, option {
+    font-family: 'Google Sans', sans-serif !important;
+  }
+}
+
 /* ลบ @media (prefers-color-scheme: dark) ออกไปเลย เพื่อไม่ให้ระบบมือถือมาแทรกแซงสีเว็บเรา */
 
 body {
