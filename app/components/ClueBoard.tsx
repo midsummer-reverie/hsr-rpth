@@ -105,7 +105,7 @@ export default function ClueBoard({ clues, showAllButton = false, showFilter = f
               </div>
               
               <p className="text-base font-medium text-gray-200 mt-1 group-hover:text-white transition-colors z-10">{clue.title}</p>
-              <p className="text-xs text-gray-500 font-mono mt-2 z-10">TYPE: {bilingualType}</p>
+              <p className="text-xs text-gray-500 mt-2 z-10">TYPE: {bilingualType}</p>
 
               {/* ลายน้ำตัวเลข ID ขนาดใหญ่ */}
               <div className="absolute right-[-10px] bottom-[-20px] text-[100px] font-black opacity-[0.03] group-hover:opacity-10 transition-opacity duration-500 pointer-events-none select-none text-white tracking-tighter">
