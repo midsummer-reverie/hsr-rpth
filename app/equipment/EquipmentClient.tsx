@@ -135,7 +135,7 @@ export default function EquipmentClient({ lightConesByPath, relicsBySet }: Props
                                 <img src={relic.image_url || 'https://iili.io/C9QECvV.png'} className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" alt={relic.name} />
                               </div>
                               
-                              <h4 className="text-xs font-bold text-white text-center uppercase tracking-wider mb-2 line-clamp-1">{relic.name}</h4>
+                              <h4 className="text-xs font-bold text-white text-center uppercase tracking-wider mb-2 line-clamp-2text-white font-bold text-sm text-wrap break-words leading-tight">{relic.name}</h4>
                               
                               <p className="text-[10px] text-[#E5C57F] text-center tracking-widest font-mono bg-white/5 px-3 py-1 rounded-sm w-full">
                                 {getStatPrefix(relic.piece_type)}{relic.min_stat} - {relic.max_stat}{relic.piece_type === 'SPHERE' ? '%' : ''}
